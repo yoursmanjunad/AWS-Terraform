@@ -39,6 +39,27 @@ resource "aws_route_table_association" "payment-rt-a" {
   route_table_id = aws_route_table.payment-rt.id
 }
 
-resource "aws_security_group" "payment-sg" {
+resource "aws_vpc" "mainvpc" {
+  cidr_block = "10.1.0.0/16"
+}
 
+resource "aws_default_security_group" "payment-sg" {
+  vpc_id = aws_vpc.payment_vpc.id
+
+  ingress {
+    protocol  = -1
+    self      = true
+    from_port = 0
+    to_port   = 0
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "Dev Env"
+  }
 }
