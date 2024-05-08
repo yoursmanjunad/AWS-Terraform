@@ -44,7 +44,8 @@ resource "aws_vpc" "mainvpc" {
 }
 
 resource "aws_default_security_group" "payment-sg" {
-  vpc_id = aws_vpc.payment_vpc.id
+  description = "Security Groups for Devs"
+  vpc_id      = aws_vpc.payment_vpc.id
 
   ingress {
     protocol  = -1
